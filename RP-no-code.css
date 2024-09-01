@@ -1,0 +1,72 @@
+.ResaltaProg {
+  .blockcmd.no-code {
+    display: inline-block;
+
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    white-space: wrap;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    overflow: auto;
+
+    .content-container {
+      opacity: 0.6;
+      -webkit-mask-image: linear-gradient(black, rgba(0, 0, 0, 0.4));
+
+      transition: all 1s;
+    }
+
+    .logo {
+      position: absolute;
+      top: 40px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+
+      svg,
+      img {
+        width: inherit;
+        height: inherit;
+        border-radius: 20px;
+        object-fit: cover;
+        opacity: 0.7;
+
+        transition: all 1s;
+      }
+    }
+
+    a {
+      color: plum;
+      text-decoration: none;
+      &:hover {
+        color: deeppink;
+      }
+    }
+    p {
+      margin: 0;
+      padding: 5px 0;
+    }
+    hr {
+      opacity: 0.2;
+    }
+    &:hover {
+      .logo {
+        svg,
+        img {
+          opacity: 1;
+          transition: all 0.3s;
+        }
+      }
+
+      .content-container {
+        opacity: 1;
+        -webkit-mask-image: none;
+
+        transition: all 0.3s;
+      }
+    }
+  }
+}
