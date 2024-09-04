@@ -1,10 +1,4 @@
 .ResaltaProg {
-  --bg: hsl(240, 50%, 10%);
-  --bga: hsl(240, 50%, 10%, 0.5);
-  
-  background-color: var(--bg);
-
-  color: white;
   padding: 15px;
 
   min-width: max-content;

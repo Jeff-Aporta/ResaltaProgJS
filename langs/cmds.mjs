@@ -41,7 +41,6 @@ function extractGroups({ input, transform }) {
     "g"
   );
   /*<-:*/
-
   {
     /*:->{"type": "prev", "name": "Limpieza de la entrada", 
     "content": `
@@ -91,41 +90,6 @@ function extractGroups({ input, transform }) {
     });
     /*<-:*/
 
-    /*:->{"type": "note", "name": "No abrazar en control de flujo", content: "Por estética, no se abrazan los bloques de control de flujo"}*/
-    ["while", "for", "if", "else", "else if", "switch", "case", "default"]
-      .map((cmd) => {
-        const regexgeneric =
-          /\s*\(.*?\)\s*\{\s+\/\*:->(?:[^{}]*|\{(?:[^{}]*|\{[^{}]*\})*\})*\}/;
-        const regex = RegExp(`(${cmd})${regexgeneric.source}`, "g");
-        return {
-          regex,
-          apply: function (frag) {
-            let r = frag.substr;
-            let structure = r.match(open)[0];
-            structure = structure.replace(/\/\*:->!?/, "").replace("*/", "");
-            structure = eval(`(${structure})`);
-            if (structure.type == "note") {
-              return r;
-            }
-            r = r.replace(":->{", ":->!{");
-            r = replaceLastOccurrence(
-              r,
-              "/\u002A<-:\u002A/",
-              "/\u002A!<-:\u002A/"
-            );
-            return r;
-          },
-        };
-      })
-      .forEach((rule) => {
-        input = ResaltaProg({
-          string: input,
-          model: {
-            rules: [rule],
-          },
-        });
-      });
-    /*<-:*/
 
     /*:->{"type": "note", "name": "Reemplazos simples para abrazar", "content": "Reemplaza los comentarios de apertura y cierre para abrazar los bloques"}*/
     input = input

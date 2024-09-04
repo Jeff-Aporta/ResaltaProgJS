@@ -1,66 +1,62 @@
-const classExec = "ResaltaProg";
-
-window["ResaltaProg"] = ResaltaProg;
+/*:->{"type": "no-code", "name": "Modulo Principal para Resaltar Programación", 
+"huerotate": 7, 
+logo: `/src/img/logo.jpeg`,
+"content": `
+    <p>
+    Este módulo maneja los diferentes módulos que resaltan la sintaxis de los lenguajes de programación.
+    <p>Procesa el protocolo general para cualquier lenguaje.
+    <p align="right"><br/>
+    <b>Autor</b>: Jeffrey Agudelo (<a href="https://github.com/Jeff-Aporta" target="_blank">Jeff-Aporta</a>)
+  `}*/
+/*<-:*/
 
 import { default as lang_js } from "./langs/js.mjs";
 import { default as cmds } from "./langs/cmds.mjs";
 
-const lenguajes = [lang_js];
-const tabspaces = 4;
-
+window["ResaltaProg"] = ResaltaProg;
 window["ResaltaProgEXEC"] = ResaltaProgEXEC;
 window["replaceLastOccurrence"] = replaceLastOccurrence;
 
+const classMain = "ResaltaProg";
+const lenguajes = [lang_js];
+const tabspaces = 4;
+
 setTimeout(ResaltaProgEXEC);
-
-function loadTextFileSync(filePath) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", filePath, false); // false para sincrónico
-  xhr.send(null);
-
-  if (xhr.status === 200) {
-    return xhr.responseText;
-  } else {
-    throw new Error("No se pudo cargar el archivo: " + xhr.status);
-  }
-}
 
 function replaceLastOccurrence(str, search, replacement) {
   const lastIndex = str.lastIndexOf(search);
   if (lastIndex === -1) {
-    return str; // No se encontró la coincidencia
+    return str;
   }
   return (
     str.slice(0, lastIndex) + replacement + str.slice(lastIndex + search.length)
   );
 }
 
-function load(url) {
-  try {
-    var text = loadTextFileSync(url);
-    return text;
-  } catch (e) {
-    return;
-  }
-}
-
 function ResaltaProgEXEC() {
-  document.querySelectorAll(`.${classExec}`).forEach((block) => {
+  document.querySelectorAll(`.${classMain}`).forEach(async (block) => {
     const lng = [...block.classList]
       .find((c) => c.startsWith("lang-"))
       .replace("lang-", "");
 
-    const untab = block.classList.contains("untab");
-    const removeDoubleLineblank = block.classList.contains("no2r-blanks");
-
-    let contenido = load(block.dataset.ref) ?? block.innerText;
-
-    if (untab) {
-      // contenido = unTab(contenido);
+    if (!lng) {
+      return;
     }
-    if (removeDoubleLineblank) {
-      // contenido = RemoveDoubleLineblank(contenido);
-    }
+
+    const autocollapse = block.classList.contains("autocollapse");
+
+    let contenido = await (async () => {
+      const url = block.dataset.ref;
+      if (!url) {
+        return block.innerText;
+      }
+      try {
+        var text = await (await fetch(url)).text();
+        return text;
+      } catch (e) {
+        return;
+      }
+    })();
 
     const model = (() => {
       return lenguajes.find((l) => {
@@ -72,10 +68,8 @@ function ResaltaProgEXEC() {
     })();
 
     if (model.preparar) {
-      contenido = model.preparar({ string: contenido, tabspaces });
+      contenido = model.preparar({ string: contenido, tabspaces, autocollapse });
     }
-
-    const mask = model.mask ? model.mask(contenido) : string;
 
     contenido = cmds({
       input: contenido,

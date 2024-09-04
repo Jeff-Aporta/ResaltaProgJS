@@ -403,6 +403,7 @@
       .body-prev {
         -webkit-mask-image: linear-gradient(black, transparent);
         max-height: 12em;
+        max-width: 600px;
         overflow: hidden;
 
         filter: blur(2px);

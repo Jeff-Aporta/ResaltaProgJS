@@ -1,32 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>R</title>
-    <script src="index.mjs" type="module" defer></script>
-    <link rel="stylesheet" href="RP-code-color.css" />
-    <link rel="stylesheet" href="RP-collapsable.css" />
-    <link rel="stylesheet" href="RP-note.css" />
-    <link rel="stylesheet" href="RP-title.css" />
-    <link rel="stylesheet" href="RP-prev.css" />
-    <link rel="stylesheet" href="RP-no-code.css" />
-    <link rel="stylesheet" href="RP.css" />
+    <title>Resalta Prog JS</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://jeff-aporta.github.io/portafolio/src/imgs/icon.png"
+    />
 
-    <style>
-      html,body{
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-size: 15px;
-      }
-    </style>
+    <script src="https://jeff-aporta.github.io/ASCIIMapLoader/index.js"></script>
+    <script src="https://jeff-aporta.github.io/ASCIIMapLoader/src/mapeos-personales.js"></script>
+
+    <meta property="og:site_name" content="Resalta Prog JS" />
+    <meta property="og:title" content="Resalta Prog JS" />
+    <meta
+      property="og:description"
+      content="resalta sintaxis de código, te ayuda a documentar código con herramientas de comentarios, notas y compactadores de bloques"
+    />
+    <meta
+      property="og:image"
+      content="https://jeff-aporta.github.io/ResaltaProgJS/src/img/logo.jpeg"
+    />
+
+
+    <script>
+      Object.values(ASCII_MAPS).forEach((map) => {
+        runASCIIMapLoader_inLine(map);
+      });
+
+      runASCIIMapLoader_inLine(`
+           📦 index.mjs
+
+           🤖 REACT (JSX)
+
+           ➤📁 src
+           │
+           ├──📁 esquema
+           ╧   └──📄 contenido
+
+           📄 index
+       `);
+    </script>
   </head>
-  <body>
-    <pre
-      class="ResaltaProg lang-js"
-      data-ref="langs/js.mjs"
-    ></pre>
-  </body>
+
+  <body></body>
 </html>

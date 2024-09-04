@@ -42,7 +42,7 @@ export default {
     <p><b>string:</b> Cadena de texto a procesar
     <p><b>Retorna:</b> Cadena de texto modificada, lista para ser procesada por los demás protocolos.
   `}*/
-  preparar: function ({ string, tabspaces }) {
+  preparar: function ({ string, tabspaces, autocollapse }) {
     /*:->!{"name": "Procedimiento de preparación"}*/
     /*:->{"type": "note", "name": "Retorna, no hay texto para procesar",
     content: `
@@ -86,7 +86,13 @@ export default {
           "g"
         ),
         inicioDeBloque: (head) => {
-          const name = head.split("(")[0].replace("function", "").trim();
+          const name = (()=>{
+            const a = head.split("(")[0].replace("function", "").trim();
+            if(a.length > 20){
+              return a.slice(0, 18) + "…";
+            }
+            return a;
+          })();
           const ref = !name ? "" : `(${name})`;
           return `/\u002A:->!\{ name: "Cuerpo de función <b>${ref}</b>" \}\u002A/\n`;
         },
@@ -129,12 +135,12 @@ export default {
         re: /function\s+\w+\s*\(\{(?!(?=\s+\/\*:->!?\{)[\s\S]*?\}\))/g,
         inicioDeBloque: (head) => {
           const name = head.split("(")[0].replace("function", "").trim();
-          return `/\u002A:->!\{ name: "Args. deconst. de <b>(${name})</b>" \}\u002A/\n`;
+          return `/\u002A:->!\{ name: "Args. destruct. de <b>(${name})</b>" \}\u002A/\n`;
         },
       },
       {
         re: /\(\s*\{(?!(?=\s+\/\*:->!?\{)[\s\S]*?\}\))/g,
-        inicioDeBloque: `/\u002A:->!\{ name: "Args deconstruidos" \}\u002A/\n`,
+        inicioDeBloque: `/\u002A:->!\{ name: "Args destruct" \}\u002A/\n`,
         open: "(",
         close: ")",
       },
@@ -191,7 +197,7 @@ export default {
           `(const|let|var)\\x20*${open.source}${noTenerColapsador.source}(?=(\\s*(\\w+[^]*?,)+\\s*\\w*\\s*\\}))`,
           "g"
         ),
-        inicioDeBloque: `/\u002A:->!\{ name: "Variables deconstruidas" \}\u002A/\n`,
+        inicioDeBloque: `/\u002A:->!\{ name: "Vars. destruct." \}\u002A/\n`,
       },
       {
         re: new RegExp(
@@ -255,12 +261,15 @@ export default {
       },
       {
         re: new RegExp(
-          `\\w+\\x20*[=:]\\s*${openBrkt.source}${noTenerColapsador.source}`,
+          `\\w+\\x20*[=:]\\s*${openBrkt.source}${noTenerColapsador.source}(?!\\])`,
           "g"
         ),
         inicioDeBloque: (head) => {
           const s = (() => {
-            if (head.indexOf("=") < head.indexOf(":")) {
+            const [ieq, idc] = ["=", ":"]
+              .map((c) => head.indexOf(c))
+              .map((i) => (i == -1 ? Infinity : i));
+            if (ieq < idc) {
               return "=";
             }
             return ":";
@@ -281,6 +290,9 @@ export default {
         close: "]",
       },
     ].forEach((rule) => {
+      if (!autocollapse) {
+        return;
+      }
       const { open = "{", close = "}" } = rule;
       string = colapsadoAutomatico({ string, rule, open, close });
     });
@@ -1233,10 +1245,6 @@ function mascaraRegexString(str) {
                 .map((c) => {
                   if (c == "{") {
                     o = true;
-                    return c;
-                  }
-                  if (c == "}") {
-                    o = false;
                     return c;
                   }
                   if (o) {
