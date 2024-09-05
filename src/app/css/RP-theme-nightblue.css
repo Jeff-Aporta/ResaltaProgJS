@@ -12,6 +12,37 @@
 
     color: white;
 
+    .blockcmd {
+      &.no-code {
+        color: steelblue;
+      }
+      &.prev {
+        .herramientas-prev {
+          .btns-prev {
+            .info-prev {
+              color: lightblue;
+              font-weight: bolder;
+              .more {
+                color: white;
+              }
+            }
+          }
+        }
+      }
+      &.note {
+        .body-note > .content-container > .content p {
+          color: steelblue;
+        }
+      }
+      &.title {
+        &:not(:is(.doc)) {
+          > .body-nocode {
+            color: steelblue;
+          }
+        }
+      }
+    }
+
     .com {
       color: gray;
 

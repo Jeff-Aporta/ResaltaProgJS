@@ -20,7 +20,7 @@
   .huerotate11 {
     .container,
     b,
-    a, 
+    a,
     h1,
     h2,
     h3,
@@ -76,9 +76,8 @@
     --hue-rotate: 11;
   }
 
-  b{
+  b {
     color: deeppink;
-    font-family: Arial, Helvetica, sans-serif;
   }
   h1,
   h2,

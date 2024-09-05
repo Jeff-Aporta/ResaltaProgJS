@@ -4,8 +4,7 @@
     padding: 15px 0;
 
     > .content-code .code{
-      padding-left: 10px;
-      font-weight: normal;
+      /* font-weight: normal; */
     }
 
     &.doc {
@@ -25,7 +24,7 @@
         background: linear-gradient(to top, #111, var(--bg));
         border: 2px solid #333;
         opacity: 0.7;
-        scale: 0.8;
+        scale: 0.95;
         transform-origin: 0 center;
         padding: 10px;
         padding-left: 15px;
@@ -44,7 +43,7 @@
     }
 
     &:not(:is(.doc)) {
-      border-top: 2px solid rgba(255, 255, 255, 0.1);
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
       background-color: var(--bg);
 
       > .content-code > .code{
@@ -56,20 +55,20 @@
         position: sticky;
         border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         margin-bottom: 15px;
-        width: 99%;
+        max-width: calc(100vw - (100vw - 98%));
         top: 0;
         padding: 10px;
         background: var(--bg);
         z-index: 10;
         padding-bottom: 30px;
+
         .content{
-          -webkit-mask-image: linear-gradient(black, rgba(0, 0, 0, 0.1));
+          /* -webkit-mask-image: linear-gradient(black, rgba(0, 0, 0, 0.1)); */
         }
       }
     }
 
     > .body-nocode {
-      font-family: Arial, Helvetica, sans-serif;
       transition: all 0.3s;
       white-space: normal;
     }
@@ -93,7 +92,6 @@
     p {
       margin: 0;
       padding: 5px 0;
-      font-weight: lighter;
       opacity: 0.8;
     }
     &:hover {
@@ -101,7 +99,7 @@
         border-top: 2px solid rgba(255, 255, 255, 0.3);
         > .body-nocode {
           .content{
-            -webkit-mask-image: none;
+            /* -webkit-mask-image: none; */
           }
         }
       }

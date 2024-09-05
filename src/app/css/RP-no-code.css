@@ -2,8 +2,6 @@
   .blockcmd.no-code {
     display: inline-block;
 
-    font-family: Arial, Helvetica, sans-serif;
-    cursor: pointer;
     white-space: wrap;
     justify-content: center;
     align-items: center;
@@ -13,7 +11,7 @@
     overflow: auto;
 
     .content-container {
-      -webkit-mask-image: linear-gradient(black, rgba(0, 0, 0, 0.4));
+      /* -webkit-mask-image: linear-gradient(black, rgba(0, 0, 0, 0.4)); */
 
       transition: all 1s;
     }
@@ -31,7 +29,7 @@
         height: inherit;
         border-radius: 20px;
         object-fit: cover;
-        opacity: 0.9;
+        /* opacity: 0.9; */
 
         transition: all 1s;
       }
@@ -55,13 +53,13 @@
       .logo {
         svg,
         img {
-          opacity: 1;
+          /* opacity: 1; */
           transition: all 0.3s;
         }
       }
 
       .content-container {
-        -webkit-mask-image: none;
+        /* -webkit-mask-image: none; */
 
         transition: all 0.3s;
       }

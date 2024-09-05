@@ -50,9 +50,12 @@ function appPrev() {
         className={`ResaltaProg ${theme}`}
         style={{
           display: "block",
-          minWidth: "calc(100vw - (100vw - 100%))",
+          minWidth: "max-content",
           margin: 0,
           padding: 0,
+          fontFamily: "Roboto, sans-serif, Arial, Helvetica",
+          fontWeight: 500,
+          padding: "0 10px",
         }}
       >
         {[
@@ -71,12 +74,14 @@ function appPrev() {
             <link
               key={css}
               rel="stylesheet"
-              href={`/src/css/RP${s}${css}.css`}
+              href={`/src/app/css/RP${s}${css}.css`}
             />
           );
         })}
 
         <style>{`
+            @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
             html,body{
                 margin: 0;
                 padding: 0;
@@ -84,9 +89,10 @@ function appPrev() {
                 min-height: 100vh;
             }
             pre{
+                font-family: inherit;
                 padding: 0 !important;
                 margin: 0 !important;
-                width: 98%;
+                width: 100%;
                 min-height: 100vh;
             }
             body {
@@ -98,20 +104,64 @@ function appPrev() {
         <div
           style={{
             fontFamily: "Arial, Helvetica, sans-serif",
-            paddingLeft: "20px",
             paddingTop: "25px",
-            color: "rgba(0,200,255,0.8)",
+            color: "rgba(200, 0, 255)",
+            fontWeight: "bolder",
             textAlign: "center",
-            width: "95%",
+            width: "100%",
           }}
         >
           {urlParam}
         </div>
-        <div style={{ padding: "10px 20px" }}>
+        <div style={{ padding: "10px 0", width: "max-content", margin: "auto" }}>
           <pre
             className={`ResaltaProg ${lng} ${nobg} ${autocollapse} ${theme}`}
             data-ref={urlParam}
-          />
+          >
+            <style>{`
+                .lds-dual-ring {
+                    color: white;
+                }
+                .lds-dual-ring,
+                .lds-dual-ring:after {
+                    box-sizing: border-box;
+                }
+                .lds-dual-ring {
+                    display: inline-block;
+                    width: 80px;
+                    height: 80px;
+                }
+                .lds-dual-ring:after {
+                    content: " ";
+                    display: block;
+                    width: 64px;
+                    height: 64px;
+                    margin: 8px;
+                    border-radius: 50%;
+                    border: 6.4px solid currentColor;
+                    border-color: currentColor transparent currentColor transparent;
+                    animation: lds-dual-ring 1.2s linear infinite;
+                }
+                @keyframes lds-dual-ring {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            `}</style>
+            <div
+              style={{
+                minHeight: "250px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "end",
+              }}
+            >
+              <div class="lds-dual-ring"></div>
+            </div>
+          </pre>
         </div>
       </div>
     );

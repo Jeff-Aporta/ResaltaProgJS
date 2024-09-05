@@ -6,7 +6,7 @@ logo: `/src/img/logo.jpeg`,
       Este módulo contiene y procesa las reglas para el resaltado de sintaxis (Syntax Highlighting) de JavaScript.
     <p><br/>
       Esta es una versión personal, ya que las alternativas disponibles no cumplen con mis expectativas.
-    <p align="right"><br/>
+    <p align="right" style="color:white;"><br/>
     <b>Autor</b>: Jeffrey Agudelo (<a href="https://github.com/Jeff-Aporta" target="_blank">Jeff-Aporta</a>)
   `}*/
 /*<-:*/
@@ -57,7 +57,7 @@ export default {
     /*:->{"type": "note", "name": "Modificación de reemplazo simple"}*/
     string = string
       .replace(/\r/g, "\n")
-      .replace(/\}\n\n\n+/g, "}\n\n\n")
+      .replace(/\}\n\n+/g, "}\n")
       .replace(/\t/g, " ".repeat(tabspaces));
     /*<-:*/
     /*:->{"type": "note", "name": "RegExs repetitivos"}*/

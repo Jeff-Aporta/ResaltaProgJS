@@ -10,8 +10,8 @@ logo: `/src/img/logo.jpeg`,
   `}*/
 /*<-:*/
 
-import { default as lang_js } from "./langs/js.mjs";
-import { default as cmds } from "./langs/cmds.mjs";
+import { default as lang_js } from "./src/app/langs/js.mjs";
+import { default as cmds } from "./src/app/langs/cmds.mjs";
 
 window["ResaltaProg"] = ResaltaProg;
 window["ResaltaProgEXEC"] = ResaltaProgEXEC;

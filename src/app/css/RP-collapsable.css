@@ -347,7 +347,6 @@
               border: 1px solid rgba(255, 255, 255, 0.3);
 
               font-weight: light;
-              font-family: Arial;
 
               .icon {
                 position: absolute;
@@ -427,7 +426,6 @@
       .code {
         padding-top: 15px;
         padding-bottom: 10px;
-        font-family: monospace;
       }
 
       &:has(.blockcmd.collapsable) {
@@ -510,7 +508,6 @@
     padding-left: 10px;
     border-radius: 20px 0 0 20px;
 
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 90%;
 
     z-index: 10;
@@ -519,6 +516,7 @@
       position: absolute;
       user-select: none;
       animation: balloon 0.5s linear infinite alternate;
+      white-space: nowrap;
     }
     hr {
       border-color: deepskyblue;
