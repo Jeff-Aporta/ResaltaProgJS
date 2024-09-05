@@ -7,6 +7,9 @@
     align-items: center;
 
     width: 100%;
+    max-width: 97dvw;
+    position: sticky;
+    left: 10px;
 
     overflow: auto;
 

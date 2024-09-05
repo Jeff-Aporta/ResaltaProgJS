@@ -108,7 +108,9 @@ function appPrev() {
             color: "rgba(200, 0, 255)",
             fontWeight: "bolder",
             textAlign: "center",
-            width: "100%",
+            width: "97dvw",
+            position: "sticky",
+            left: "10px",
           }}
         >
           {urlParam}
