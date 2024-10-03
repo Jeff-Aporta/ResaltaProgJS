@@ -1,10 +1,20 @@
 .ResaltaProg {
+  --hue-rotate: 0;
+  --bga: hsla(var(--hue-bg), var(--sat-bg), var(--lum-bg), 0.5);
+  --bg: hsl(var(--hue-bg), var(--sat-bg), var(--lum-bg));
+  --bg2: hsla(calc(var(--hue-bg) + 330), calc(var(--sat-bg) + 30%), var(--lum-bg), 0.8);
+
   padding: 15px;
 
   min-width: max-content;
 
   position: relative;
   z-index: 1;
+
+  &.nobg {
+    --bg: transparent !important;
+    --bga: transparent !important;
+  }
 
   .huerotate-1,
   .huerotate1,
@@ -14,6 +24,7 @@
   .huerotate5,
   .huerotate6,
   .huerotate7,
+  .huerotate7-5,
   .huerotate8,
   .huerotate9,
   .huerotate10,
@@ -35,9 +46,6 @@
   }
   .huerotate-1 {
     --hue-rotate: -1;
-  }
-  .huerotate0 {
-    --hue-rotate: 0;
   }
   .huerotate1 {
     --hue-rotate: 1;
@@ -114,5 +122,12 @@
     .blockcmd:has(.ballon:hover) {
       --index-ballon-global: 1;
     }
+  }
+
+  .right {
+    text-align: right;
+  }
+  .white {
+    color: white;
   }
 }

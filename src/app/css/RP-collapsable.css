@@ -213,6 +213,7 @@
     }
 
     .herramientas {
+      user-select: none;
       position: absolute;
       top: 2px;
 
@@ -513,6 +514,7 @@
     z-index: 10;
 
     .icon {
+      margin-top: -2px;
       position: absolute;
       user-select: none;
       animation: balloon 0.5s linear infinite alternate;

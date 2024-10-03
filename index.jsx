@@ -14,10 +14,10 @@ function appPrev() {
   document.body.scrollTop = 0;
 
   function App() {
-    const urlParam = getParam({
+    const urlParam = unescape(getParam({
       name: "url",
       required: { message: "URL del archivo" },
-    });
+    }));
     const autocollapse = (() => {
       const r =
         getParam({
@@ -55,30 +55,9 @@ function appPrev() {
           padding: 0,
           fontFamily: "Roboto, sans-serif, Arial, Helvetica",
           fontWeight: 500,
-          padding: "0 10px",
+          padding: "0 10px 130px 10px",
         }}
       >
-        {[
-          "theme-nightblue",
-          "theme-night",
-          "theme-light",
-          "collapsable",
-          "note",
-          "title",
-          "prev",
-          "no-code",
-          "",
-        ].map((css) => {
-          const s = css ? "-" : "";
-          return (
-            <link
-              key={css}
-              rel="stylesheet"
-              href={`/src/app/css/RP${s}${css}.css`}
-            />
-          );
-        })}
-
         <style>{`
             @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
@@ -93,7 +72,8 @@ function appPrev() {
                 padding: 0 !important;
                 margin: 0 !important;
                 width: 100%;
-                min-height: 100vh;
+                min-height: 95vh;
+                min-width: 95vw !important;
             }
             body {
                 font-size: 14px;
@@ -106,7 +86,6 @@ function appPrev() {
             fontFamily: "Arial, Helvetica, sans-serif",
             paddingTop: "25px",
             color: "rgba(200, 0, 255)",
-            fontWeight: "bolder",
             textAlign: "center",
             width: "97dvw",
             position: "sticky",
@@ -114,6 +93,10 @@ function appPrev() {
           }}
         >
           {urlParam}
+          <br />
+          <br />
+          <hr style={{ opacity: 0.2 }} />
+          <br />
         </div>
         <div style={{ padding: "10px 0", width: "max-content", margin: "auto" }}>
           <pre

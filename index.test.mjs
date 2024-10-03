@@ -3,24 +3,18 @@
 logo: `/src/img/logo.jpeg`,
 "content": `
     <p>
-    Este módulo maneja y gestiona los diferentes módulos que resaltan la sintaxis de los lenguajes de programación.
-    <p>Procesa el protocolo general para escoger y ejecutar el proceso de resaltado.
-    <p class="right white"><br/>
+    Este módulo maneja los diferentes módulos que resaltan la sintaxis de los lenguajes de programación.
+    <p>Procesa el protocolo general para cualquier lenguaje.
+    <p align="right"><br/>
     <b>Autor</b>: Jeffrey Agudelo (<a href="https://github.com/Jeff-Aporta" target="_blank">Jeff-Aporta</a>)
   `}*/
 /*<-:*/
 
-/*:->{"type": "title", "name": "Carga de módulos", content:"Dependencias JS y CSS", huerotate: 7.5}*/
-/*:->{"type": "note", "name": "Carga de módulos JS", content: "Módulos que complementan el sistema, fragmentación de mantenibilidad."}*/
-import { default as lang_js } from "https://jeff-aporta.github.io/ResaltaProgJS/src/app/langs/js.mjs"; //:-> Sintaxis de JavaScript
-import { default as cmds } from "https://jeff-aporta.github.io/ResaltaProgJS/src/app/langs/cmds.mjs"; //:-> Gestionador de agrupaciones HTML
-/*<-:*/
+import { default as lang_js } from "/src/app/langs/js.mjs";
+import { default as cmds } from "/src/app/langs/cmds.mjs";
 
-/*:->{"type": "note", "name": "Carga de módulos CSS", content: "Se inyectan las etiquetas link en el documento."}*/
-(() => {
-  //:-> Inyección de elementos HTML en el documento
-  const links = document.querySelectorAll("link[rel='stylesheet']");
-  const sufijosCSS = [
+(()=>{
+  [
     "theme-nightblue",
     "theme-night",
     "theme-light",
@@ -30,46 +24,35 @@ import { default as cmds } from "https://jeff-aporta.github.io/ResaltaProgJS/src
     "prev",
     "no-code",
     "",
-  ];
-  sufijosCSS.forEach((n) => {
-    const href = `https://jeff-aporta.github.io/ResaltaProgJS/src/app/css/RP${s}${n}.css`;
-    if (links.some((link) => link.href === href)) {
-      return;
-    }
+  ].forEach(n =>{
     const link = document.createElement("link");
     const s = n ? "-" : "";
     link.rel = "stylesheet";
-    link.href = href;
+    link.href = `/src/app/css/RP${s}${n}.css`;
     document.head.appendChild(link);
   });
 })();
-/*<-:*/
-/*<-:*/
 
-/*:->{"type": "title", "name": "Iniciación del módulo",  content: "Carga y declaración inicial del módulo.", huerotate: 8}*/
-/*:->{"type": "note", "name": "Quema global de funciones características", 
-content: "Este módulo no exporta funciones, pero las quema en el proyecto"}*/
 window["ResaltaProg"] = ResaltaProg;
 window["ResaltaProgEXEC"] = ResaltaProgEXEC;
-/*<-:*/
 
-/*:->{"type": "note", "name": "Variables de control", content: "Variables arbitrarias para controlar el sistema general."}*/
 const classMain = "ResaltaProg";
 const lenguajes = [lang_js];
 const tabspaces = 4;
-/*<-:*/
 
-/*:->{"type": "note", "name": "Autoejecución", content: "Se descarta que iniciando hayan estructuras que solicitan resaltado de sintaxis."}*/
 setTimeout(ResaltaProgEXEC);
-/*<-:*/
-/*<-:*/
 
-/*:->{"type": "title", "name": "Funciones características", 
-content: "Conjunto de funciones que se queman de forma global y particularizan el módulo"}*/
 function ResaltaProgEXEC() {
-  /*:->{"type": "note", "name": "Barrido y ejecución del resaltado"}*/
   document.querySelectorAll(`.${classMain}`).forEach(async (block) => {
-    const lng = ([...block.classList].find((c) => c.startsWith("lang-")) ?? "lang-js").replace("lang-", "");
+    let lng = [...block.classList].find((c) => c.startsWith("lang-"));
+
+    if (!lng) {
+      return;
+    }
+
+    lng = lng.replace("lang-", "");
+
+    const autocollapse = block.classList.contains("autocollapse");
 
     let contenido = await (async () => {
       const url = block.dataset.ref;
@@ -110,7 +93,6 @@ function ResaltaProgEXEC() {
     })();
 
     if (model.preparar) {
-      const autocollapse = block.classList.contains("autocollapse");
       contenido = model.preparar({
         string: contenido,
         tabspaces,
@@ -127,33 +109,24 @@ function ResaltaProgEXEC() {
 
     block.innerHTML = contenido.string;
   });
-  /*<-:*/
 }
 
-function ResaltaProg({ string, model, mask }) {
-  /*:->{"type": "note", "name": "Evaluación de reglas del modelo"}*/
-  if (!mask && model.mask) { //:-> No hubo mascara calculada previamente, y el modelo lo requiere, se procede a 
+function ResaltaProg({ string, model, tabspaces = 4, mask }) {
+  if (!mask && model.mask) {
     mask = model.mask(string);
   }
-
-  /*:->{"type": "note", "name": "Retorno", content: "procesamiento directo por el modelo", huerotate: 6}*/
   if (Array.isArray(string)) {
-    //:-> La entrada ha sido fragmentada en un proceso anterior.
     return string.map((s) => {
-      return ResaltaProg({ string: s, model, mask });
+      return ResaltaProg({ string: s, model, tabspaces, mask });
     });
   }
-  /*<-:*/
 
   const frg = fragmentar({ string, mask });
 
-  /*:->{"type": "note", "name": "Retorno", content: "No hubo fragmentación, es texto plano.", huerotate: 6}*/
   if (typeof frg == "string") {
     return frg;
   }
-  /*<-:*/
 
-  /*:->{"type": "note", "name": "Retorno", content: "Hubo fragmentación, es código formateado.", huerotate: 6}*/
   return frg
     .map((f) => {
       if (typeof f == "string") {
@@ -162,7 +135,6 @@ function ResaltaProg({ string, model, mask }) {
       return f.rule.apply(f);
     })
     .join("");
-  /*<-:*/
 
   function fragmentar({ string, mask }) {
     if (typeof string != "string" || !string.trim()) {
@@ -230,6 +202,4 @@ function ResaltaProg({ string, model, mask }) {
     }
     return string;
   }
-  /*<-:*/
 }
-/*<-:*/

@@ -191,7 +191,7 @@ function extractGroups({ input, transform }) {
     const clsMultiline = codeCollapse.lines > 1 ? "multiline" : "";
 
     let retorno = [
-      `<div class="blockcmd ${type}" id="${idC}">`,
+      `<div class="blockcmd ${type} ${hue}" id="${idC}">`,
       ...bloqueType(),
       `</div>`,
     ].join("");

@@ -1,7 +1,8 @@
 .ResaltaProg {
   &.nightblue {
-    --bga: hsl(240, 50%, 10%, 0.5);
-    --bg: hsl(240, 50%, 10%);
+    --hue-bg: 240;
+    --sat-bg: 50%;
+    --lum-bg: 10%;
 
     &.nobg {
       --bg: transparent !important;

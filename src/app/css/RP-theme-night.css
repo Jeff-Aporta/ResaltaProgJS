@@ -1,12 +1,8 @@
 .ResaltaProg {
   &.night {
-    --bga: #16162060;
-    --bg: #161620;
-
-    &.nobg {
-      --bg: transparent !important;
-      --bga: transparent !important;
-    }
+    --hue-bg: 240;
+    --sat-bg: 19%;
+    --lum-bg: 11%;
 
     background-color: var(--bg);
 

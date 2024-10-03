@@ -86,9 +86,9 @@ export default {
           "g"
         ),
         inicioDeBloque: (head) => {
-          const name = (()=>{
+          const name = (() => {
             const a = head.split("(")[0].replace("function", "").trim();
-            if(a.length > 20){
+            if (a.length > 20) {
               return a.slice(0, 18) + "…";
             }
             return a;
@@ -109,6 +109,13 @@ export default {
       {
         re: new RegExp(
           `${args.source}\\s*=>${open.source}${noTenerColapsador.source}`,
+          "g"
+        ),
+        inicioDeBloque: `/\u002A:->!\{ name: "Cuerpo lambda" \}\u002A/\n`,
+      },
+      {
+        re: new RegExp(
+          `\\w+\\s*=>\\s*${open.source}${noTenerColapsador.source}`,
           "g"
         ),
         inicioDeBloque: `/\u002A:->!\{ name: "Cuerpo lambda" \}\u002A/\n`,
@@ -239,10 +246,16 @@ export default {
         close: ")",
       },
       {
-        re: new RegExp(
-          `\\w+\\((?!\\s*[\\{\\[\\(])${noTenerColapsador.source}`,
-          "g"
-        ),
+        re: (()=>{
+          const funcion = /\w+\(/;
+          const noTenerCuerpoEspecialDentro = /(?!\s*[\{\[\(])/;
+          const noTenerLambda = /(?!\s*\w+\s*=>)(?!\s*(async)\s+)/;
+          const noTener = `${noTenerCuerpoEspecialDentro.source}${noTenerLambda.source}`;
+          return new RegExp(
+            `${funcion.source}${noTener}${noTenerColapsador.source}`,
+            "g"
+          )
+        })(),
         inicioDeBloque: (head) => {
           const name = head.split("(")[0].trim();
           return `/\u002A:->!\{ name: "Args de <b>(${name})</b>" \}\u002A/\n`;
@@ -615,15 +628,18 @@ export default {
         },
 
         {
-          regex: (() => {
-            const kwd = `
+          regex: [
+            (() => {
+              const kwd = `
                 global process Buffer require module exports
               `;
-            return [
-              new RegExp(`\\b(${kwd.trim().replace(/ /g, "|")})\\b`, "g"),
-              /export default/g,
-            ];
-          })(),
+              return [
+                new RegExp(`\\b(${kwd.trim().replace(/ /g, "|")})\\b`, "g"),
+                /export default/g,
+              ];
+            })(),
+            /default as/g,
+          ],
           apply: function (frag) {
             const clase = "kwd node";
             return `<span class="${clase}">${frag.substr}</span>`;
